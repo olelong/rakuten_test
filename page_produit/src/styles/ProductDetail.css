@@ -1,18 +1,41 @@
-.ProductDetail {
-  /* text-align: left; */
-}
-
-.ProductDetail-header {
-  /* min-height: 100vh; */
+.box-center {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 50vh;
 }
 
-/* 
-@media () {
-  .App-logo {
-    
+.logo-rakuten {
+  width: 20vh;
+  height: auto;
+  margin-right: 2;
+  margin-bottom: 2vh;
+}
+
+.breadcrumbs-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.product-image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  width:max-content;
+  /* margin-top: 4vh; */
+  padding: 10px;
+  margin: 4vh 16px;
+
+  background-color: var(--light-grey);
+  background-size: max-content;
+}
+
+@media (max-width: 768px) {
+  .product-image {
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
   }
-} */
+}
