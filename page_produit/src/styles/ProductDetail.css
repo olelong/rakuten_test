@@ -18,24 +18,44 @@
   cursor: pointer;
 }
 
+.breadcrumbs-icon {
+  margin-right: 0.5;
+  width: auto;
+  height: 20;
+}
+
+.product-infos-container {
+  display: flex;
+  justify-content: "center";
+  align-items: "flex-start";
+  flex-wrap: "wrap";
+  gap: 4;
+  margin-top: 4vh;
+}
+
 .product-image {
   display: flex;
-  flex-direction: row;
+  flex: 1 1 300px;
   justify-content: center;
 
-  width:max-content;
-  /* margin-top: 4vh; */
+  width: max-content;
   padding: 10px;
-  margin: 4vh 16px;
+  margin-right: 4vh;
 
   background-color: var(--light-grey);
   background-size: max-content;
+}
+
+.product-infos-box {
+  display: flex;
+  flex: '2 1 400px';
+  flex-direction: column;
+  gap: 2;
 }
 
 @media (max-width: 768px) {
   .product-image {
     flex-direction: column;
     align-items: center;
-    width: max-content;
   }
 }

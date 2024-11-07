@@ -11,6 +11,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import GamesIcon from "@mui/icons-material/Games";
 import SportEsportsIcon from "@mui/icons-material/SportsEsports";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 import { API_PRODUCT_BASE_URL } from "../config";
 
@@ -18,13 +19,34 @@ import logo from "../assets/rakuten-logo.svg";
 
 import "../styles/ProductDetail.css";
 
+function PriceBox({ discountedPrice, price, label, isBestPrice }) {
+  return (
+    price > 0 && (
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Typography variant="h5" fontWeight="bold">
+          {price} €
+        </Typography>
+        <Typography variant="subtitle1">{label}</Typography>
+        {isBestPrice && (
+          <LocalFireDepartmentIcon color="error" fontSize="large" />
+        )}
+      </Box>
+    )
+  );
+}
+
 function ProductDetail() {
   const { productId } = useParams(); // Permet de récupérer l'ID présent dans l'URL.
   const [productInfos, setProductInfos] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log("HERE:", productId);
+  const discountedPrice = 0; //parseFloat(productInfos?.data.newBestPrice) || 0;
+  const newPrice = parseFloat(productInfos?.data.newBestPrice) || 0;
+  const usedPrice = parseFloat(productInfos?.data.usedBestPrice) || 0;
+  const isNewCheaper = newPrice <= usedPrice;
+
+  console.log("HERE:", productId, newPrice);
 
   // Requête fetch pour récupérer les détails du produit.
   useEffect(() => {
@@ -85,7 +107,7 @@ function ProductDetail() {
             href="#"
             className="breadcrumbs-link"
           >
-            <HomeIcon sx={{ marginRight: 0.5, width: "auto", height: 25 }} />
+            <HomeIcon className="breadcrumbs-icon" />
             Accueil
           </Link>
           <Link
@@ -96,7 +118,7 @@ function ProductDetail() {
           >
             {" "}
             {/* On peut remplacer le "#" par le bon url, ex: "/jeux-videos-et-consoles" */}
-            <GamesIcon />
+            <GamesIcon className="breadcrumbs-icon" />
             Jeux vidéo & Consoles
           </Link>
           <Link
@@ -105,7 +127,7 @@ function ProductDetail() {
             href="#"
             className="breadcrumbs-link"
           >
-            <SportEsportsIcon />
+            <SportEsportsIcon className="breadcrumbs-icon" />
             Jeux Vidéo
           </Link>
           <Typography color="text.primary">Jeux vidéo PS5</Typography>
@@ -113,47 +135,39 @@ function ProductDetail() {
       </Container>
 
       {/* Fiche Produit */}
-
-      <Container>
+      <Container maxWidth="lg" className="product-infos-container">
         <Box className="product-image">
           {/* Image du produit */}
           <img
             src={productInfos.data.imagesUrls[0]}
             alt={productInfos.name}
-            style={{ width: "300px", height: "auto", marginBottom: "20px" }}
+            style={{ maxWidth: "300px", height: "auto" }}
           />
         </Box>
 
-        <Box className="product-infos-box" marginTop={4} padding={2}>
+        <Box className="product-infos-box">
           {/* Nom du produit */}
           <Typography variant="h5" marginBottom={2}>
             {productInfos.data.headline}
           </Typography>
-          {/* Prix et prix remisé */}
-          <Typography
-            variant="h6"
-            color={
-              productInfos.discountPrice ? "text.secondary" : "text.primary"
-            }
-          >
-            Meilleur prix neuf: {productInfos.data.summaryNewBestPrice} €
-            Meilleur prix d'occasion: {productInfos.data.usedBestPrice} €
-          </Typography>
-          {productInfos.discountPrice && (
-            <Typography variant="h6" color="text.primary">
-              Prix remisé : {productInfos.discountPrice} €
-            </Typography>
-          )}
+
+          {/* Prix */}
+          <PriceBox
+            discountedPrice={discountedPrice}
+            price={newPrice}
+            label="Prix neuf"
+            isBestPrice={isNewCheaper}
+          />
+          <PriceBox
+            price={usedPrice}
+            label="Prix d'occasion"
+            isBestPrice={!isNewCheaper}
+          />
+
           {/* Description */}
-          <Typography variant="body1" marginTop={2}>
+          <Typography variant="subtitle2" marginTop={2}>
             {JSON.parse(`"${productInfos.data.googleRichCards.description}"`)}
           </Typography>
-          {/* Note / Avis */}
-          {/* {productInfos.data && (
-            <Typography variant="body1" marginTop={2}>
-              Note : {productInfos.data.reviews[0]} / 5
-            </Typography>
-          )} */}
         </Box>
       </Container>
     </div>
@@ -161,3 +175,11 @@ function ProductDetail() {
 }
 
 export default ProductDetail;
+
+
+// {/* Note / Avis */}
+// {/* {productInfos.data && (
+//   <Typography variant="body1" marginTop={2}>
+//     Note : {productInfos.data.reviews[0]} / 5
+//   </Typography>
+// )} */}

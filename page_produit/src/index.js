@@ -9,7 +9,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="product/13060247469" />} /> {/* J'ajoute cette ligne pour accéder directement à la fiche produit correspondante, mais dans un site complet, elle devrait être retirée. */}
+        <Route path="/" element={<Navigate to="product/7758205598" />} /> {/* J'ajoute cette ligne pour accéder directement à la fiche produit correspondante, mais dans un site complet, elle devrait être retirée. */}
         <Route path="product/:productId" element={<ProductDetail />} />
       </Routes>
     </BrowserRouter>
