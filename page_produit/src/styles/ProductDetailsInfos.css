@@ -1,0 +1,35 @@
+.product-infos-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4;
+  margin-top: 4vh;
+}
+
+.product-image {
+  display: flex;
+  flex: "1 1 300px";
+  justify-content: center;
+
+  width: max-content;
+  padding: 10px;
+  margin-right: 4vh;
+
+  background-color: var(--light-grey);
+  background-size: max-content;
+}
+
+.product-infos-box {
+  display: flex;
+  flex: 2 1 400px;
+  flex-direction: column;
+  gap: 2;
+  max-width: 50%;
+}
+
+@media (max-width: 768px) {
+  .product-infos-box {
+    max-width: 90%;
+  }
+}
