@@ -10,9 +10,6 @@ import {
   Breadcrumbs,
   Link,
 } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import GamesIcon from "@mui/icons-material/Games";
-import SportEsportsIcon from "@mui/icons-material/SportsEsports";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 import { API_PRODUCT_BASE_URL } from "../config";
@@ -131,7 +128,6 @@ function DisplayReviewList({ reviews, reviewsPerPage }) {
 }
 
 function ProductBreadcrumbs({ breadcrumbs }) {
-  console.log(breadcrumbs);
   if (!Array.isArray(breadcrumbs) || breadcrumbs.length === 0) {
     return null;
   }
@@ -146,7 +142,6 @@ function ProductBreadcrumbs({ breadcrumbs }) {
           href={"#"} //{breadcrumb.url || "#"}
           className="breadcrumbs-link"
         >
-          {/* {breadcrumb.icon && <breadcrumb.icon className="breadcrumbs-icon" />} */}
           {breadcrumb.label}
         </Link>
       ))}
@@ -206,7 +201,6 @@ function ProductDetailsInfos() {
     getProductDetails();
   }, [productId]);
 
-  console.log(productInfos);
 
   if (loading) {
     return (
@@ -238,7 +232,6 @@ function ProductDetailsInfos() {
         {/* Fiche Produit */}
         <Container className="product-infos-container">
           <Box className="product-image">
-            {/* Image du produit */}
             <img
               src={productInfos?.data.imagesUrls[0]}
               alt={productInfos?.data?.headline}
@@ -247,12 +240,10 @@ function ProductDetailsInfos() {
           </Box>
 
           <Box className="product-infos-box">
-            {/* Nom du produit */}
             <Typography variant="h6" marginBottom={2}>
               {productInfos?.data.headline}
             </Typography>
 
-            {/* Score */}
             <Box
               sx={{
                 display: "flex",
@@ -274,7 +265,6 @@ function ProductDetailsInfos() {
               </Typography>
             </Box>
 
-            {/* Prix */}
             <PriceBox
               oldPrice={oldPrice}
               price={newPrice}
@@ -287,7 +277,6 @@ function ProductDetailsInfos() {
               isBestPrice={!isNewCheaper}
             />
 
-            {/* Description */}
             {productInfos?.data?.googleRichCards?.description && (
               <Typography variant="subtitle2" marginTop={2}>
                 {JSON.parse(
@@ -297,7 +286,6 @@ function ProductDetailsInfos() {
             )}
           </Box>
 
-          {/* Review */}
           <DisplayReviewList reviews={reviews} reviewsPerPage={5} />
         </Container>
       </div>

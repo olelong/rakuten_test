@@ -22,12 +22,6 @@
   text-align: center;
 }
 
-/* .breadcrumbs-icon {
-  margin-right: 0.5;
-  width: auto;
-  height: 20;
-} */
-
 .product-image {
   display: flex;
   flex: "1 1 300px";
