@@ -21,7 +21,6 @@ import logo from "../assets/rakuten-logo.svg";
 import "../styles/ProductDetail.css";
 
 function PriceBox({ oldPrice, price, label, isBestPrice }) {
-  console.log("OldPrice:", oldPrice);
   return (
     price > 0 && (
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -108,7 +107,7 @@ function ProductDetail() {
   console.log("desc:", productInfos.data.googleRichCards.description);
 
   return (
-    <div>
+    <div className="product-detail-page">
       <Container>
         <Box display="flex" alignItems="center">
           <Box
@@ -212,6 +211,13 @@ function ProductDetail() {
 
         {/* Review */}
       </Container>
+      <footer className="product-footer">
+        {" "}
+        © 2024 Rakuten test by Oriane Lelong. Tous droits réservés.
+        <br />
+        Conditions générales | Politique de confidentialité
+        <br />{" "}
+      </footer>
     </div>
   );
 }
