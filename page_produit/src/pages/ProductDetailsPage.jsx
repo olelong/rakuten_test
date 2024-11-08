@@ -16,9 +16,8 @@ function ProductDetailsPage() {
             className="logo-rakuten"
           />
         </Box>
+        <ProductDetailsInfos />
       </Container>
-
-      <ProductDetailsInfos />
       <footer className="product-footer">
         {" "}
         © 2024 Rakuten test by Oriane Lelong. Tous droits réservés.

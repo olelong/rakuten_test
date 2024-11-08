@@ -60,9 +60,8 @@ function Review({ title, name, note, comment }) {
         <Typography variant="subtitle1" fontWeight="bold">
           {title}
         </Typography>
-        <Rating name="review-note" value={note} readOnly precision={0.5} />
       </Box>
-
+      <Rating name="review-note" value={note} readOnly precision={0.5} />
       <Typography variant="body1" marginTop={1}>
         {comment}
       </Typography>
@@ -200,7 +199,6 @@ function ProductDetailsInfos() {
 
     getProductDetails();
   }, [productId]);
-
 
   if (loading) {
     return (

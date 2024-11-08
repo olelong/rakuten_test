@@ -50,7 +50,7 @@
   width: 90%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .product-infos-box {
     max-width: 90%;
   }
