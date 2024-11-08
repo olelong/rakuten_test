@@ -7,6 +7,7 @@ import {
   Typography,
   Breadcrumbs,
   CircularProgress,
+  Rating,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import GamesIcon from "@mui/icons-material/Games";
@@ -19,13 +20,31 @@ import logo from "../assets/rakuten-logo.svg";
 
 import "../styles/ProductDetail.css";
 
-function PriceBox({ discountedPrice, price, label, isBestPrice }) {
+function PriceBox({ oldPrice, price, label, isBestPrice }) {
+  console.log("OldPrice:", oldPrice);
   return (
     price > 0 && (
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography variant="h5" fontWeight="bold">
-          {price} €
-        </Typography>
+        {/* Gestion des cas de promotions et de l'affichage des prix */}
+        {oldPrice && oldPrice > 0 ? (
+          <>
+            <Typography variant="h5" fontWeight="bold">
+              {price} €
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              fontWeight="light"
+              sx={{ textDecorationLine: "line-through" }}
+            >
+              {oldPrice} €
+            </Typography>
+          </>
+        ) : (
+          <Typography variant="h5" fontWeight="bold">
+            {price} €
+          </Typography>
+        )}
+
         <Typography variant="subtitle1">{label}</Typography>
         {isBestPrice && (
           <LocalFireDepartmentIcon color="error" fontSize="large" />
@@ -41,7 +60,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const discountedPrice = 0; //parseFloat(productInfos?.data.newBestPrice) || 0;
+  const oldPrice = parseFloat(productInfos?.data?.priceList) || 0;
   const newPrice = parseFloat(productInfos?.data.newBestPrice) || 0;
   const usedPrice = parseFloat(productInfos?.data.usedBestPrice) || 0;
   const isNewCheaper = newPrice <= usedPrice;
@@ -87,6 +106,7 @@ function ProductDetail() {
     );
   }
   console.log("desc:", productInfos.data.googleRichCards.description);
+
   return (
     <div>
       <Container>
@@ -139,21 +159,39 @@ function ProductDetail() {
         <Box className="product-image">
           {/* Image du produit */}
           <img
-            src={productInfos.data.imagesUrls[0]}
-            alt={productInfos.name}
+            src={productInfos?.data.imagesUrls[0]}
+            alt={productInfos?.data.headline}
             style={{ maxWidth: "300px", height: "auto" }}
           />
         </Box>
 
         <Box className="product-infos-box">
           {/* Nom du produit */}
-          <Typography variant="h5" marginBottom={2}>
-            {productInfos.data.headline}
+          <Typography variant="h6" marginBottom={2}>
+            {productInfos?.data.headline}
           </Typography>
+
+          {/* Score */}
+          <Box
+            sx={{ display: "flex", alignItems: "center", marginBottom: "1vh" }}
+          >
+            <Rating
+              name="product-score"
+              value={productInfos?.data?.globalRating.score}
+              readOnly
+              precision={0.5}
+            />
+            <Typography sx={{ marginLeft: 1, marginRight: 1 }}>
+              {productInfos?.data?.globalRating.score}
+            </Typography>
+            <Typography>
+              sur {productInfos.data.globalRating.nbReviews} avis
+            </Typography>
+          </Box>
 
           {/* Prix */}
           <PriceBox
-            discountedPrice={discountedPrice}
+            oldPrice={oldPrice}
             price={newPrice}
             label="Prix neuf"
             isBestPrice={isNewCheaper}
@@ -165,17 +203,20 @@ function ProductDetail() {
           />
 
           {/* Description */}
-          <Typography variant="subtitle2" marginTop={2}>
-            {JSON.parse(`"${productInfos.data.googleRichCards.description}"`)}
-          </Typography>
+          {productInfos?.data?.googleRichCards?.description && (
+            <Typography variant="subtitle2" marginTop={2}>
+              {JSON.parse(`"${productInfos.data.googleRichCards.description}"`)}
+            </Typography>
+          )}
         </Box>
+
+        {/* Review */}
       </Container>
     </div>
   );
 }
 
 export default ProductDetail;
-
 
 // {/* Note / Avis */}
 // {/* {productInfos.data && (
