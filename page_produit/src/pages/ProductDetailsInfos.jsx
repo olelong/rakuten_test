@@ -167,38 +167,41 @@ function ProductDetailsInfos() {
     ? productInfos?.data?.breadcrumbs
     : [];
 
+
   // Requête fetch pour récupérer les détails du produit.
   useEffect(() => {
-    const getProductDetails = async () => {
-      try {
-        const response = await fetch(`${API_PRODUCT_BASE_URL}${productId}`);
-        if (!response.ok) {
-          throw new Error(
-            "Erreur de récupération des informations du produit."
-          );
-        }
+    if (productInfos === null && productId) {
+      const getProductDetails = async () => {
+        try {
+          const response = await fetch(`${API_PRODUCT_BASE_URL}${productId}`);
+          if (!response.ok) {
+            throw new Error(
+              "Erreur de récupération des informations du produit."
+            );
+          }
 
-        const data = await response.json();
-        if (!data?.data) {
-          throw new Error(
-            "Le produit que vous cherchez n'existe pas ou est temporairement indisponible."
-          );
-        } else setProductInfos(data);
-      } catch (err) {
-        if (err.message.includes("Failed to fetch")) {
-          setError(
-            "Un problème de connexion est survenu. Veuillez vérifier votre connexion ou réessayer plus tard."
-          );
-        } else {
-          setError("Une erreur est survenue, veuillez réessayer.");
+          const data = await response.json();
+          if (!data?.data) {
+            throw new Error(
+              "Le produit que vous cherchez n'existe pas ou est temporairement indisponible."
+            );
+          } else setProductInfos(data);
+        } catch (err) {
+          if (err.message.includes("Failed to fetch")) {
+            setError(
+              "Un problème de connexion est survenu. Veuillez vérifier votre connexion ou réessayer plus tard."
+            );
+          } else {
+            setError("Une erreur est survenue, veuillez réessayer.");
+          }
+        } finally {
+          setLoading(false);
         }
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    getProductDetails();
-  }, [productId]);
+      getProductDetails();
+    }
+  }, [productInfos, productId]);
 
   if (loading) {
     return (
@@ -262,6 +265,14 @@ function ProductDetailsInfos() {
                 sur {productInfos.data.globalRating.nbReviews} avis
               </Typography>
             </Box>
+
+            {productInfos?.data?.isAvailable && (
+              <Typography variant="subtitle2">
+                {productInfos?.data?.isAvailable
+                  ? "Disponible"
+                  : "Indisponible"}
+              </Typography>
+            )}
 
             <PriceBox
               oldPrice={oldPrice}
