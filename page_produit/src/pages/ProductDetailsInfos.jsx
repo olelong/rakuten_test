@@ -141,7 +141,7 @@ function ProductBreadcrumbs({ breadcrumbs }) {
           href={"#"} //{breadcrumb.url || "#"}
           className="breadcrumbs-link"
         >
-          {breadcrumb.label}
+          {breadcrumb?.label || ""}
         </Link>
       ))}
       <Typography color="text.primary">
@@ -158,11 +158,11 @@ function ProductDetailsInfos() {
   const [error, setError] = useState(null);
 
   const oldPrice = parseFloat(productInfos?.data?.priceList) || 0;
-  const newPrice = parseFloat(productInfos?.data.newBestPrice) || 0;
-  const usedPrice = parseFloat(productInfos?.data.usedBestPrice) || 0;
+  const newPrice = parseFloat(productInfos?.data?.newBestPrice) || 0;
+  const usedPrice = parseFloat(productInfos?.data?.usedBestPrice) || 0;
   const isNewCheaper = newPrice <= usedPrice;
 
-  const reviews = productInfos?.data?.reviews;
+  const reviews = productInfos?.data?.reviews || [];
   const breadcrumbs = Array.isArray(productInfos?.data?.breadcrumbs)
     ? productInfos?.data?.breadcrumbs
     : [];
@@ -233,37 +233,41 @@ function ProductDetailsInfos() {
         <Container className="product-infos-container">
           <Box className="product-image">
             <img
-              src={productInfos?.data.imagesUrls[0]}
+              src={productInfos?.data?.imagesUrls[0]}
               alt={productInfos?.data?.headline}
               style={{ maxWidth: "300px", height: "auto" }}
             />
           </Box>
 
           <Box className="product-infos-box">
-            <Typography variant="h6" marginBottom={2}>
-              {productInfos?.data.headline}
-            </Typography>
+            {productInfos?.data?.headline && (
+              <Typography variant="h6" marginBottom={2}>
+                {productInfos.data.headline}
+              </Typography>
+            )}
 
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "1vh",
-              }}
-            >
-              <Rating
-                name="product-score"
-                value={productInfos?.data?.globalRating.score}
-                readOnly
-                precision={0.5}
-              />
-              <Typography sx={{ marginLeft: 1, marginRight: 1 }}>
-                {productInfos?.data?.globalRating.score}
-              </Typography>
-              <Typography>
-                sur {productInfos.data.globalRating.nbReviews} avis
-              </Typography>
-            </Box>
+            {productInfos?.data?.globalRating && (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "1vh",
+                }}
+              >
+                <Rating
+                  name="product-score"
+                  value={productInfos?.data?.globalRating.score}
+                  readOnly
+                  precision={0.5}
+                />
+                <Typography sx={{ marginLeft: 1, marginRight: 1 }}>
+                  {productInfos.data.globalRating?.score}
+                </Typography>
+                <Typography>
+                  sur {productInfos.data.globalRating?.nbReviews} avis
+                </Typography>
+              </Box>
+            )}
 
             {productInfos?.data?.isAvailable && (
               <Typography variant="subtitle2">
