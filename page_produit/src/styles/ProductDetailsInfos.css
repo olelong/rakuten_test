@@ -7,6 +7,27 @@
   margin-top: 4vh;
 }
 
+.box-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+}
+
+.breadcrumbs-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* .breadcrumbs-icon {
+  margin-right: 0.5;
+  width: auto;
+  height: 20;
+} */
+
 .product-image {
   display: flex;
   flex: "1 1 300px";
@@ -26,6 +47,13 @@
   flex-direction: column;
   gap: 2;
   max-width: 50%;
+}
+
+.reviews-box {
+  margin-top: 5%;
+  background-color: var(--light-grey);
+  padding: 10px;
+  width: 90%;
 }
 
 @media (max-width: 768px) {

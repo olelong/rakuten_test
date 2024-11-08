@@ -4,29 +4,10 @@
   min-height: 100vh;
 }
 
-.box-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 50vh;
-}
-
 .logo-rakuten {
   width: 20vh;
   height: auto;
   margin-bottom: 2vh;
-}
-
-.breadcrumbs-link {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.breadcrumbs-icon {
-  margin-right: 0.5;
-  width: auto;
-  height: 20;
 }
 
 .product-footer {
