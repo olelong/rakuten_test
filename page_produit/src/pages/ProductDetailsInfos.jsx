@@ -167,7 +167,6 @@ function ProductDetailsInfos() {
     ? productInfos?.data?.breadcrumbs
     : [];
 
-
   // Requête fetch pour récupérer les détails du produit.
   useEffect(() => {
     if (productInfos === null && productId) {
